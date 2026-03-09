@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Catatan Kerja</h2>
+    <input type="text" id="inputData" placeholder="Ketik data di sini...">
+    <button onclick="simpanData()">Simpan</button>
+    <button onclick="lihatData()">Lihat Data</button>
+
+    <script>
+        function simpanData() {
+            let teks = document.getElementById("inputData").value;
+            localStorage.setItem("catatanGue", teks);
+            alert("Data udah kesimpen di memori!");
+            document.getElementById("inputData").value = "";
+        }
+
+        function lihatData() {
+            let hasil = localStorage.getItem("catatanGue");
+            alert("Data yang lo simpan: " + hasil);
+        }
+    </script>
+</body>
+</html>

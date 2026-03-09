@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplikasi Cloud Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-4">
+
+    <div class="container" style="max-width: 500px;">
+        <div class="card shadow p-4">
+            <h3>Input Data Cloud</h3>
+            <input type="text" id="dataInput" class="form-control mb-2" placeholder="Tulis sesuatu...">
+            <button onclick="simpanData()" class="btn btn-primary w-100">Simpan ke Cloud</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+        // Konfigurasi lo (ini kuncinya)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAcBiTab8BfAbULoNuCYlQezKKnzj5B6s",
+            authDomain: "datakantorapp-26097.firebaseapp.com",
+            projectId: "datakantorapp-26097",
+            storageBucket: "datakantorapp-26097.firebasestorage.app",
+            messagingSenderId: "462357204572",
+            appId: "1:462357204572:web:e625fa1a12b7576ec3e099"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Fungsi Simpan
+        window.simpanData = async () => {
+            let input = document.getElementById("dataInput");
+            if(input.value === "") return;
+
+            try {
+                await addDoc(collection(db, "catatan"), {
+                    isi: input.value,
+                    tanggal: new Date().toLocaleTimeString()
+                });
+                alert("Data berhasil masuk ke Cloud!");
+                input.value = "";
+            } catch (e) {
+                alert("Error: " + e.message);
+            }
+        };
+    </script>
+</body>
+</html>
